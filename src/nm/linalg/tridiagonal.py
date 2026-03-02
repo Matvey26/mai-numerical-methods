@@ -1,7 +1,7 @@
 """
 https://moodle.kstu.ru/pluginfile.php/512336/mod_resource/content/1/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%20%D0%BF%D1%80%D0%BE%D0%B3%D0%BE%D0%BD%D0%BA%D0%B8.pdf
 """
-from ..utils import Matrix
+import numpy as np
 
 
 def is_diagonally_dominant(A: list[tuple]) -> bool:
@@ -19,7 +19,7 @@ def is_diagonally_dominant(A: list[tuple]) -> bool:
     return True
 
 
-def thomas_algorithm(A: list[tuple], b: list[float]) -> Matrix:
+def thomas_algorithm(A: list[tuple], b: list[float]) -> np.ndarray:
     """
     A = [(a1, b1, c1), (a2, b2, c2), ..., (an, bn, cn)],
     where a1 = 0, cn = 0.

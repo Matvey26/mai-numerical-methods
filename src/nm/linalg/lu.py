@@ -2,7 +2,7 @@
 https://stepanzh.github.io/computational_thermodynamics/syslinear/plu.html
 """
 import numpy as np
-from ..utils import Matrix, count_permutation
+from ..utils import count_permutation
 
 
 def lu_decomposition(A: np.ndarray, epsilon: float = 1e-8) -> tuple[list[int], np.ndarray, np.ndarray]:
@@ -57,7 +57,7 @@ def backward_pass(U: np.ndarray, b: np.ndarray) -> np.ndarray:
     return x
 
 
-def determinant(p: list[int], L: Matrix, U: Matrix = None) -> float:
+def determinant(p: list[int], L: np.ndarray, U: np.ndarray = None) -> float:
     if U is None:
         U = L
     res = 1
@@ -68,7 +68,7 @@ def determinant(p: list[int], L: Matrix, U: Matrix = None) -> float:
     return res
 
 
-def solve_system(p: list[int], L: Matrix, U: Matrix, b: Matrix) -> Matrix:
+def solve_system(p: list[int], L: np.ndarray, U: np.ndarray, b: np.ndarray) -> np.ndarray:
     z = forward_pass(L, b[p])
     x = backward_pass(U, z)
     return x
