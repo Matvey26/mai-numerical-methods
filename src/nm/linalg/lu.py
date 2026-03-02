@@ -1,55 +1,58 @@
 """
 https://stepanzh.github.io/computational_thermodynamics/syslinear/plu.html
 """
+import numpy as np
 from ..utils import Matrix, count_permutation
 
 
-def lu_decomposition(A: Matrix, epsilon: float = 1e-8) -> tuple[list[int], Matrix, Matrix]:
+def lu_decomposition(A: np.ndarray, epsilon: float = 1e-8) -> tuple[list[int], np.ndarray, np.ndarray]:
 
-    if A.shape[0] != A.shape[1]:
+    if A.ndim != 2 and A.shape[0] != A.shape[1]:
         raise ValueError('Матрица A должна быть квадратной')
-    
+
+    A = A.astype(float)
     n = A.shape[0]
 
-    U = Matrix.zeros(shape=A.shape)
-    L = Matrix.zeros(shape=A.shape)
-    p = [0] * n
+    U = np.zeros(A.shape)
+    L = np.zeros(A.shape)
+    p = list(range(n))
 
     A_k = A.copy()
 
-    for k in range(n - 1):
-        p[k] = max(range(n), key=lambda i: abs(A_k[i, k]))
+    for k in range(n):
+        pivot_idx = max(range(k, n), key=lambda i: abs(A_k[i, k]))
 
-        if abs(A_k[p[k], k]) < epsilon:
+        if pivot_idx != k:
+            A_k[[pivot_idx, k]] = A_k[[k, pivot_idx]]
+            L[[pivot_idx, k]] = L[[k, pivot_idx]]
+            p[pivot_idx], p[k] = p[k], p[pivot_idx]
+
+        if abs(A_k[k, k]) < epsilon:
             raise ValueError('Матрица A плохо обусловлена (или вырождена)')
 
-        U[k, k:] = A_k[p[k], k:]
-        L[:, k] = A_k[:, k] / U[k, k]
-        A_k -= L[:, k].dot(U[k, :])
+        U[k, k:] = A_k[k, k:]
+        L[k:, k] = A_k[k:, k] / U[k, k]
+        A_k[k:, k:] -= np.outer(L[k:, k], U[k, k:])
 
-    p[n - 1] = max(range(n), key=lambda i: abs(A_k[i, n - 1]))
-    U[n - 1, n - 1] = A_k[p[n - 1], n - 1]
-    L[:, n - 1] = A_k[:, n - 1] / U[n - 1, n - 1]
-
-    return p, L[p, :], U
+    return p, L, U
 
 
-def forward_pass(L: Matrix, b: Matrix) -> Matrix:
+def forward_pass(L: np.ndarray, b: np.ndarray) -> np.ndarray:
     n = b.shape[0]
-    x = Matrix.zeros(shape=(n, 1))
-    x[0, 0] = b[0, 0] / L[0, 0]
+    x = np.zeros_like(b)
+    x[0] = b[0] / L[0, 0]
     for i in range(1, n):
-        x[i, 0] = (b[i, 0] - L[i, :i].dot(x[:i, 0])[0, 0]) / L[i, i]
+        x[i] = (b[i] - L[i, :i].dot(x[:i]).item()) / L[i, i]
     
     return x
 
 
-def backward_pass(U: Matrix, b: Matrix) -> Matrix:
+def backward_pass(U: np.ndarray, b: np.ndarray) -> np.ndarray:
     n = b.shape[0]
-    x = Matrix.zeros(shape=(n, 1))
-    x[n - 1, 0] = b[n - 1, 0] / U[n - 1, n - 1]
+    x = np.zeros_like(b)
+    x[n - 1] = b[n - 1] / U[n - 1, n - 1]
     for i in reversed(range(0, n - 1)):
-        x[i, 0] = (b[i, 0] - U[i, i + 1:].dot(x[i + 1:, 0])[0, 0]) / U[i, i]
+        x[i] = (b[i] - U[i, i + 1:].dot(x[i + 1:]).item()) / U[i, i]
     
     return x
 
@@ -71,14 +74,14 @@ def solve_system(p: list[int], L: Matrix, U: Matrix, b: Matrix) -> Matrix:
     return x
 
 
-def inverse_matrix(p: list[int], L: Matrix, U: Matrix, epsilon: float = 1e-8):
+def inverse_matrix(p: list[int], L: np.ndarray, U: np.ndarray, epsilon: float = 1e-8):
     det = determinant(p, U)
     if abs(det) < epsilon:
         raise ValueError(f'Матрица вырождена, определитель равен: {det:.6g}')
     
     n = len(p)
-    X = Matrix.zeros(shape=(n, n))
-    I = Matrix.eye(size=n)
+    X = np.zeros((n, n))
+    I = np.eye(n)
 
     for i in range(n):
         x_i = solve_system(p, L, U, I[:, i])
