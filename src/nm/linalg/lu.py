@@ -28,7 +28,7 @@ def lu_decomposition(A: np.ndarray, epsilon: float = 1e-8) -> tuple[list[int], n
             p[pivot_idx], p[k] = p[k], p[pivot_idx]
 
         if abs(A_k[k, k]) < epsilon:
-            raise ValueError('Матрица A плохо обусловлена (или вырождена)')
+            raise ValueError('Матрица A близка к вырожденной')
 
         U[k, k:] = A_k[k, k:]
         L[k:, k] = A_k[k:, k] / U[k, k]
