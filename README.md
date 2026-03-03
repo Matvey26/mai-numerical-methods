@@ -3,6 +3,7 @@
 
 ## Структура проекта
 
+```
 numerical-methods/
 │
 ├── pyproject.toml
@@ -29,4 +30,5 @@ numerical-methods/
 │   └── lab3/
 │
 └── tests/
+```
 
