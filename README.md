@@ -25,7 +25,7 @@ numerical-methods/
 │
 ├── labs/
 │   ├── lab1/
-│   │   └── main.py
+│   │   └── main.ipynb
 │   ├── lab2/
 │   └── lab3/
 │

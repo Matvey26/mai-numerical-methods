@@ -7,6 +7,7 @@ from .lu import inverse_matrix
 from .tridiagonal import thomas_algorithm
 from .iterative import simple_iterations
 from .iterative import seidel_method
+from .eigen import eigen_jacobi
 
 __all__ = [
     'lu_decomposition',
@@ -18,4 +19,5 @@ __all__ = [
     'thomas_algorithm',
     'simple_iterations',
     'seidel_method',
+    'eigen_jacobi'
 ]
