@@ -1,3 +1,7 @@
+import numpy as np
+from scipy.sparse import csr_matrix
+
+
 def transpose_permutation(p):
     p_new = [0] * len(p)
     for i, k in enumerate(p):
@@ -21,3 +25,17 @@ def count_permutation(p):
         result += cnt - 1
 
     return result
+
+
+def csr_row_norm(A: csr_matrix):
+    rows_sum = np.add.reduceat(
+        np.abs(A.data),
+        A.indptr[:-1]
+    )
+    return np.max(rows_sum)
+
+
+def csr_col_norm(A: csr_matrix):
+    cols_sum = np.zeros(A.shape[1])
+    np.add.at(cols_sum, A.indices, np.abs(A.data))
+    return np.max(cols_sum)

@@ -5,6 +5,8 @@ from .lu import determinant
 from .lu import solve_system
 from .lu import inverse_matrix
 from .tridiagonal import thomas_algorithm
+from .iterative import simple_iterations
+from .iterative import seidel_method
 
 __all__ = [
     'lu_decomposition',
@@ -14,4 +16,6 @@ __all__ = [
     'solve_system',
     'inverse_matrix',
     'thomas_algorithm',
+    'simple_iterations',
+    'seidel_method',
 ]
