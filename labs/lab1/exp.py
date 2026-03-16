@@ -1,1 +1,0 @@
-from nm.linalg import eigen_jacobi
