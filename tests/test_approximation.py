@@ -6,8 +6,11 @@ from nm.approximation import (
     interpolation_apriori_error_bound,
     evaluate_cubic_spline,
     lagrange_polynomial,
+    least_squares_normal_system,
+    least_squares_polynomial,
     natural_cubic_spline_coefficients,
     newton_polynomial,
+    squared_error_sum,
 )
 
 
@@ -109,3 +112,42 @@ def test_lab3_2_natural_spline_uses_expected_coefficients():
     for x_node, y_node in zip(x_nodes, y_nodes):
         assert np.isclose(evaluate_cubic_spline(x_nodes, coefficients, x_node), y_node)
     assert np.isclose(evaluate_cubic_spline(x_nodes, coefficients, -0.5), 1.9977782645)
+
+
+def test_lab3_3_least_squares_variant_11():
+    x_nodes = np.array([-5.0, -3.0, -1.0, 1.0, 3.0, 5.0])
+    y_nodes = np.array([2.9442, 2.8198, 2.3562, 0.7854, 0.32175, 0.1974])
+
+    linear = least_squares_polynomial(x_nodes, y_nodes, degree=1)
+    quadratic = least_squares_polynomial(x_nodes, y_nodes, degree=2)
+    cubic = least_squares_polynomial(x_nodes, y_nodes, degree=3)
+
+    assert np.allclose(linear.coeffs, np.array([-0.3256992857, 1.5707916667]))
+    assert np.allclose(
+        quadratic.coeffs,
+        np.array([0.0000002232, -0.3256992857, 1.5707890625]),
+    )
+    assert np.allclose(
+        cubic.coeffs,
+        np.array([0.0116152199, 0.0000002232, -0.5603267280, 1.5707890625]),
+    )
+    assert np.isclose(squared_error_sum(linear, x_nodes, y_nodes), 0.7006866120)
+    assert np.isclose(squared_error_sum(quadratic, x_nodes, y_nodes), 0.7006866120)
+    assert np.isclose(squared_error_sum(cubic, x_nodes, y_nodes), 0.1411740353)
+
+
+def test_lab3_3_least_squares_normal_system_variant_11():
+    x_nodes = np.array([-5.0, -3.0, -1.0, 1.0, 3.0, 5.0])
+    y_nodes = np.array([2.9442, 2.8198, 2.3562, 0.7854, 0.32175, 0.1974])
+
+    normal_matrix, right_side = least_squares_normal_system(x_nodes, y_nodes, degree=2)
+
+    assert np.allclose(
+        normal_matrix,
+        np.array([
+            [6.0, 0.0, 70.0],
+            [0.0, 70.0, 0.0],
+            [70.0, 0.0, 1414.0],
+        ]),
+    )
+    assert np.allclose(right_side, np.array([9.42475, -22.79895, 109.95555]))

@@ -8,8 +8,11 @@ from .approximation import (
     interpolation_apriori_error_bound,
     interpolation_omega,
     lagrange_polynomial,
+    least_squares_normal_system,
+    least_squares_polynomial,
     natural_cubic_spline_coefficients,
     newton_polynomial,
+    squared_error_sum,
 )
 
 __all__ = [
@@ -23,6 +26,9 @@ __all__ = [
     'interpolation_apriori_error_bound',
     'interpolation_omega',
     'lagrange_polynomial',
+    'least_squares_normal_system',
+    'least_squares_polynomial',
     'natural_cubic_spline_coefficients',
     'newton_polynomial',
+    'squared_error_sum',
 ]
