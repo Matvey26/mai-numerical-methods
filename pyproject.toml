@@ -10,6 +10,7 @@ authors = [
     { name="Your Name" }
 ]
 dependencies = [
+    "matplotlib",
     "numpy",
     "scipy"
 ]

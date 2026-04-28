@@ -29,6 +29,9 @@ def thomas_algorithm(A: list[tuple], b: list[float]) -> np.ndarray:
                          'A должна иметь диагональное преобладание')
 
     n = len(A)
+    if n == 1:
+        return np.array([b[0] / A[0][1]])
+
     alpha = [0] * n
     beta = [0] * n
     alpha[0] = beta[0] = None  # эти значения не используются

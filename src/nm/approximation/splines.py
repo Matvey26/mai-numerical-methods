@@ -1,5 +1,7 @@
 import numpy as np
 
+from ..linalg import thomas_algorithm
+
 
 def _validate_spline_nodes(
     x_nodes: list[float] | np.ndarray,
@@ -25,34 +27,33 @@ def natural_cubic_spline_coefficients(
     y_nodes: list[float] | np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     x, y = _validate_spline_nodes(x_nodes, y_nodes)
-    n = x.size
     h = np.diff(x)
+    intervals_count = h.size
 
-    system = np.zeros((n, n), dtype=float)
-    right_side = np.zeros(n, dtype=float)
-    system[0, 0] = 1.0
-    system[-1, -1] = 1.0
+    c = np.zeros(x.size, dtype=float)
+    if intervals_count > 1:
+        system = []
+        right_side = []
 
-    for i in range(1, n - 1):
-        system[i, i - 1] = h[i - 1]
-        system[i, i] = 2 * (h[i - 1] + h[i])
-        system[i, i + 1] = h[i]
-        right_side[i] = 6 * (
-            (y[i + 1] - y[i]) / h[i]
-            - (y[i] - y[i - 1]) / h[i - 1]
-        )
+        for i in range(1, x.size - 1):
+            lower = h[i - 1] if i > 1 else 0.0
+            diagonal = 2 * (h[i - 1] + h[i])
+            upper = h[i] if i < x.size - 2 else 0.0
+            system.append((lower, diagonal, upper))
+            right_side.append(
+                3 * (
+                    (y[i + 1] - y[i]) / h[i]
+                    - (y[i] - y[i - 1]) / h[i - 1]
+                )
+            )
 
-    second_derivatives = np.linalg.solve(system, right_side)
+        c[1:-1] = np.asarray(thomas_algorithm(system, right_side), dtype=float)
 
     a = y[:-1].copy()
-    b = (
-        np.diff(y) / h
-        - h * (2 * second_derivatives[:-1] + second_derivatives[1:]) / 6
-    )
-    c = second_derivatives[:-1] / 2
-    d = np.diff(second_derivatives) / (6 * h)
+    b = np.diff(y) / h - h * (c[1:] + 2 * c[:-1]) / 3
+    d = np.diff(c) / (3 * h)
 
-    return a, b, c, d
+    return a, b, c[:-1], d
 
 
 def evaluate_cubic_spline(
