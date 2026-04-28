@@ -26,18 +26,20 @@ numerical-methods/
 │       │   ├── solvers.py     # Метод Ньютона и простой итерации для f(x) = 0
 │       │   └── systems.py     # Те же методы для систем F(X) = 0
 │       │
+│       ├── approximation/     # Приближение функций (Лаб 3)
+│       │   ├── __init__.py
+│       │   ├── interpolation.py
+│       │   └── splines.py
+│       │
 │       └── utils.py           # Общие утилиты (графики, замеры погрешности)
 │
 ├── labs/
-│   ├── lab1/
-│   │   └── main.ipynb
-│   ├── lab2/
-│   │   ├── lab2_1.ipynb       # Исследование уравнения
-│   │   └── lab2_2.ipynb       # Исследование системы
-│   └── lab3/
+│   ├── lab1.ipynb
+│   ├── lab2.ipynb
+│   └── lab3.ipynb
 │
 └── tests/
     ├── test_linalg.py
-    └── test_nonlinear.py
+    ├── test_nonlinear.py
+    └── test_approximation.py
 ```
-
