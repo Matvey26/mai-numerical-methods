@@ -12,6 +12,11 @@ from .least_squares import (
     least_squares_polynomial,
     squared_error_sum,
 )
+from .numerical_differentiation import (
+    first_derivative_first_order,
+    first_derivative_second_order,
+    second_derivative,
+)
 from .splines import (
     evaluate_cubic_spline,
     natural_cubic_spline_coefficients,
@@ -28,6 +33,9 @@ __all__ = [
     'least_squares_normal_system',
     'least_squares_polynomial',
     'squared_error_sum',
+    'first_derivative_first_order',
+    'first_derivative_second_order',
+    'second_derivative',
     'evaluate_cubic_spline',
     'natural_cubic_spline_coefficients',
 ]
