@@ -10,7 +10,14 @@ from nm.approximation import (
     least_squares_polynomial,
     natural_cubic_spline_coefficients,
     newton_polynomial,
+    rectangle_error_bound,
+    rectangle_rule,
+    runge_romberg_error,
+    simpson_error_bound,
+    simpson_rule,
     squared_error_sum,
+    trapezoidal_error_bound,
+    trapezoidal_rule,
 )
 
 
@@ -151,3 +158,52 @@ def test_lab3_3_least_squares_normal_system_variant_11():
         ]),
     )
     assert np.allclose(right_side, np.array([9.42475, -22.79895, 109.95555]))
+
+
+def test_lab3_5_numerical_integration_variant_11():
+    function = lambda x: 1 / (x ** 3 + 64)
+
+    rectangle_h1 = rectangle_rule(function, -2.0, 2.0, 1.0)
+    rectangle_h2 = rectangle_rule(function, -2.0, 2.0, 0.5)
+    trapezoidal_h1 = trapezoidal_rule(function, -2.0, 2.0, 1.0)
+    trapezoidal_h2 = trapezoidal_rule(function, -2.0, 2.0, 0.5)
+    simpson_h1 = simpson_rule(function, -2.0, 2.0, 1.0)
+    simpson_h2 = simpson_rule(function, -2.0, 2.0, 0.5)
+
+    assert np.isclose(rectangle_h1, 0.0625872651)
+    assert np.isclose(rectangle_h2, 0.0626255883)
+    assert np.isclose(trapezoidal_h1, 0.0627556471)
+    assert np.isclose(trapezoidal_h2, 0.0626714561)
+    assert np.isclose(simpson_h1, 0.0626755189)
+    assert np.isclose(simpson_h2, 0.0626433925)
+
+    assert np.isclose(
+        abs(runge_romberg_error(rectangle_h1, rectangle_h2, 1.0, 0.5, order=2)),
+        0.0000127744,
+    )
+    assert np.isclose(
+        abs(runge_romberg_error(trapezoidal_h1, trapezoidal_h2, 1.0, 0.5, order=2)),
+        0.0000280637,
+    )
+    assert np.isclose(
+        abs(runge_romberg_error(simpson_h1, simpson_h2, 1.0, 0.5, order=4)),
+        0.0000021418,
+    )
+
+
+def test_lab3_5_theoretical_error_bounds_variant_11():
+    second_derivative_bound = 0.0054664723032070
+    fourth_derivative_bound = 0.0154288391741536
+
+    assert np.isclose(
+        rectangle_error_bound(-2.0, 2.0, 1.0, second_derivative_bound),
+        0.0009110787,
+    )
+    assert np.isclose(
+        trapezoidal_error_bound(-2.0, 2.0, 1.0, second_derivative_bound),
+        0.0018221574,
+    )
+    assert np.isclose(
+        simpson_error_bound(-2.0, 2.0, 1.0, fourth_derivative_bound),
+        0.0003428631,
+    )

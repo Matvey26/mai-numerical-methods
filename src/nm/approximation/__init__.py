@@ -17,6 +17,15 @@ from .numerical_differentiation import (
     first_derivative_second_order,
     second_derivative,
 )
+from .numerical_integration import (
+    rectangle_rule,
+    rectangle_error_bound,
+    runge_romberg_error,
+    simpson_error_bound,
+    simpson_rule,
+    trapezoidal_error_bound,
+    trapezoidal_rule,
+)
 from .splines import (
     evaluate_cubic_spline,
     natural_cubic_spline_coefficients,
@@ -36,6 +45,13 @@ __all__ = [
     'first_derivative_first_order',
     'first_derivative_second_order',
     'second_derivative',
+    'rectangle_rule',
+    'rectangle_error_bound',
+    'runge_romberg_error',
+    'simpson_error_bound',
+    'simpson_rule',
+    'trapezoidal_error_bound',
+    'trapezoidal_rule',
     'evaluate_cubic_spline',
     'natural_cubic_spline_coefficients',
 ]
