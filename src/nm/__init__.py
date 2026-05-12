@@ -14,6 +14,14 @@ from .approximation import (
     newton_polynomial,
     squared_error_sum,
 )
+from .ode import (
+    adams_bashforth_method,
+    euler_method,
+    exact_solution_error,
+    reduce_second_order_ode,
+    runge_kutta_method,
+    runge_romberg_errors,
+)
 
 __all__ = [
     'transpose_permutation',
@@ -31,4 +39,10 @@ __all__ = [
     'natural_cubic_spline_coefficients',
     'newton_polynomial',
     'squared_error_sum',
+    'adams_bashforth_method',
+    'euler_method',
+    'exact_solution_error',
+    'reduce_second_order_ode',
+    'runge_kutta_method',
+    'runge_romberg_errors',
 ]

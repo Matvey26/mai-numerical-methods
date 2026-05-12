@@ -31,12 +31,17 @@ numerical-methods/
 │       │   ├── interpolation.py
 │       │   └── splines.py
 │       │
+│       ├── ode/               # Задачи Коши для ОДУ (Лаб 4)
+│       │   ├── __init__.py
+│       │   └── ivp.py
+│       │
 │       └── utils.py           # Общие утилиты (графики, замеры погрешности)
 │
 ├── labs/
 │   ├── lab1.ipynb
 │   ├── lab2.ipynb
-│   └── lab3.ipynb
+│   ├── lab3.ipynb
+│   └── lab4.ipynb
 │
 └── tests/
     ├── test_linalg.py
