@@ -1,0 +1,98 @@
+\documentclass[14pt, a4paper]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[left=3cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{indentfirst}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{xcolor}
+% \usepackage{times}
+\usepackage{tempora}
+\usepackage{ulem}
+\usepackage{setspace}
+\pagestyle{empty}
+
+\makeatletter
+\renewcommand\section{\@startsection {section}{1}{\parindent}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}%
+  {0.5ex}%
+  {\normalfont\Large\bfseries}}
+\renewcommand\tableofcontents{%
+  \begin{center}\Large\bfseries\contentsname\end{center}%
+  \@starttoc{toc}%
+}
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{1.5em}}
+\makeatother
+
+\begin{document}
+\onehalfspacing
+
+\begin{center}
+    \textbf{ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ ОБРАЗОВАТЕЛЬНОЕ} \\
+    \textbf{УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ} \\
+    \textbf{«МОСКОВСКИЙ АВИАЦИОННЫЙ ИНСТИТУТ} \\
+    \textbf{(НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ)»}
+\end{center}
+
+\begin{center}
+    \bfseries Институт №8 «Компьютерные науки и \\
+    \bfseries прикладная математика» \\
+    \bfseries Кафедра 806 «Вычислительная математика \\
+    \bfseries и программирование»
+\end{center}
+
+\vspace{3cm}
+
+\begin{center}
+    \Large\bfseries Отчет \\
+    \vspace{0.5cm}
+    \mdseries по лабораторной работе №3.4
+\end{center}
+
+\vfill
+
+\noindent
+\hfill
+\begin{tabular}{ll}
+Группа:       & М8О-307Б-21 \\
+Студент:      & М. С. Ивченко \\
+Преподаватель:& доц. В. В. Киндинова \\
+Оценка:       & \underline{\makebox[3cm][c]{}} \\ [0.2cm]
+Дата:         & \underline{\makebox[3cm][c]{}}
+\end{tabular}
+
+\vfill
+
+\begin{center}
+    Москва \\
+    2026
+\end{center}
+
+\newpage
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+\newpage
+
+\section*{Тема}
+\addcontentsline{toc}{section}{Тема}
+Цель данной лабораторной работы -- освоить численное дифференцирование функций, заданных таблицей значений. Работа показывает, как по соседним узлам сетки можно приближенно вычислять первую и вторую производные в заданной точке.
+
+\section*{Задание}
+\addcontentsline{toc}{section}{Задание}
+Вычислить первую и вторую производную от таблично заданной функции $y_i = f(x_i)$, $i = 0, 1, 2, 3, 4$ в точке $x = X^*$.
+
+\section*{Теория}
+\addcontentsline{toc}{section}{Теория}
+% TODO: Описать конечно-разностные формулы для первой и второй производных таблично заданной функции.
+
+\section*{Ход лабораторной работы}
+\addcontentsline{toc}{section}{Ход лабораторной работы}
+% TODO: Описать исходную таблицу значений, выбор расчетных формул и вычисление первой и второй производных в точке X^*.
+
+\section*{Выводы}
+\addcontentsline{toc}{section}{Выводы}
+% TODO: Сформулировать выводы по лабораторной работе 3.4.
+
+\end{document}
