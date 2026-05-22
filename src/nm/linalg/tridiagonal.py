@@ -19,12 +19,16 @@ def is_diagonally_dominant(A: list[tuple]) -> bool:
     return True
 
 
-def thomas_algorithm(A: list[tuple], b: list[float]) -> np.ndarray:
+def thomas_algorithm(
+    A: list[tuple],
+    b: list[float],
+    check_diagonal_dominance: bool = True,
+) -> np.ndarray:
     """
     A = [(a1, b1, c1), (a2, b2, c2), ..., (an, bn, cn)],
     where a1 = 0, cn = 0.
     """
-    if not is_diagonally_dominant(A):
+    if check_diagonal_dominance and not is_diagonally_dominant(A):
         raise ValueError('Для использования метода прогонки матрица '
                          'A должна иметь диагональное преобладание')
 
@@ -49,4 +53,4 @@ def thomas_algorithm(A: list[tuple], b: list[float]) -> np.ndarray:
     for i in reversed(range(n - 1)):
         x[i] = alpha[i + 1] * x[i + 1] + beta[i + 1]
 
-    return x
+    return np.array(x)
