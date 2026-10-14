@@ -35,16 +35,20 @@ numerical-methods/
 │       │   ├── __init__.py
 │       │   └── ivp.py
 │       │
+│       ├── parabolic.py       # Параболические уравнения, три схемы и граничные условия (Лаб 5)
+│       │
 │       └── utils.py           # Общие утилиты (графики, замеры погрешности)
 │
 ├── labs/
 │   ├── lab1.ipynb
 │   ├── lab2.ipynb
 │   ├── lab3.ipynb
-│   └── lab4.ipynb
+│   ├── lab4.ipynb
+│   └── lab5.ipynb             # Вариант 8: решение, выводы формул, графики и погрешности
 │
 └── tests/
     ├── test_linalg.py
     ├── test_nonlinear.py
-    └── test_approximation.py
+    ├── test_approximation.py
+    └── test_parabolic.py      # Сходимость схем и порядки аппроксимации границ (Лаб 5)
 ```
