@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 
-from nm.parabolic import BoundaryCondition, solve_parabolic
+from nm.pde.parabolic import BoundaryCondition, solve_parabolic
 
 
 class ParabolicTests(unittest.TestCase):
